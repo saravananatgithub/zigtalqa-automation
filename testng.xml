@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Testing Retrans Apps">
+<suite name="Testing Zigtal Apps">
 	<test name="Regression">
 		<classes>
 			<class name="com.zigtal.test.SanityTests" />
