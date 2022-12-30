@@ -22,7 +22,7 @@ public class TestBase {
 		try {
 			properties.load(url.openStream());
 			testEnv = properties.getProperty("testenv");
-			url = ClassLoader.getSystemResource(testEnv + "-xpath.properties");
+			url = ClassLoader.getSystemResource(testEnv + "-locator.properties");
 			xpathProperties.load(url.openStream());
 		} catch (FileNotFoundException fie) {
 			fie.printStackTrace();
