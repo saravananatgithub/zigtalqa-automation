@@ -31,6 +31,24 @@ public class TestBase {
 		}
 	}
 
+	public static enum ElementLocators {
+		LOGIN_LOGO_LOCATOR(xpathProperties.getProperty("login-logo")),
+		LOGIN_IMAGE_LOCATOR(xpathProperties.getProperty("login-image")),
+		USERNAME_LOCATOR(xpathProperties.getProperty("username")),
+		PASSWORD_LOCATOR(xpathProperties.getProperty("password")),
+		LOGINBUTTON_LOCATOR(xpathProperties.getProperty("loginButton"));
+
+		private String locatorValue = "";
+
+		private ElementLocators(String locatorValue) {
+			this.locatorValue = locatorValue;
+		}
+
+		public String getLocatorValue() {
+			return locatorValue;
+		}
+	}
+
 	public static WebDriver driver;
 	public static LoginPage loginPage = null;
 
@@ -43,9 +61,6 @@ public class TestBase {
 
 	private String profileImageXpath = "//img[@alt='profile picture']";
 	private String logoutXpath = "//a[normalize-space()='Logout']";
-
-	protected String loginImageXpath = xpathProperties.getProperty("login-image");
-	protected String loginLogoXpath = xpathProperties.getProperty("login-logo");
 
 	protected void threadwait(int k) {
 		try {
@@ -66,7 +81,7 @@ public class TestBase {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		loginPage = new LoginPage(driver);
 		driver.get(baseUrl);
-		threadwait(5000);
+		threadwait(8000);
 
 	}
 

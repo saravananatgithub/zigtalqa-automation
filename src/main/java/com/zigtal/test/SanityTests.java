@@ -9,9 +9,10 @@ public class SanityTests extends TestBase {
 
 	@Test
 	public void login() {
-		System.out.println("--------" +loginLogoXpath);
-		assertEquals(driver.findElement(By.xpath(loginLogoXpath)).isDisplayed(), true);
-		assertEquals(driver.findElement(By.xpath(loginImageXpath)).isDisplayed(), true);
+		assertEquals(driver.findElement(By.xpath(ElementLocators.LOGIN_LOGO_LOCATOR.getLocatorValue())).isDisplayed(),
+				true);
+		assertEquals(driver.findElement(By.xpath(ElementLocators.LOGIN_IMAGE_LOCATOR.getLocatorValue())).isDisplayed(),
+				true);
 		loginPage.login();
 	}
 
