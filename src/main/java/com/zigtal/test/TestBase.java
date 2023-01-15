@@ -12,18 +12,30 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import com.zigtal.framework.pageobjects.LoginPage;
+import com.zigtal.test.utils.ElementLocatorsUtils;
+import com.zigtal.test.utils.TestDataUtils;
 
 public class TestBase {
 	public static Properties properties = new Properties();
-	public static Properties xpathProperties = new Properties();
+	public static Properties tenantTestDataProperties = new Properties();
+	public static Properties tenantLocatorProperties = new Properties();
 	public static String testEnv = "";
+	public static String tenant = "";
+
 	static {
 		java.net.URL url = ClassLoader.getSystemResource("env.properties");
 		try {
 			properties.load(url.openStream());
 			testEnv = properties.getProperty("testenv");
-			url = ClassLoader.getSystemResource(testEnv + "-locator.properties");
-			xpathProperties.load(url.openStream());
+			tenant = properties.getProperty("tenant");
+			System.out.println(testEnv + "/" + tenant + "/locator.properties");
+			url = ClassLoader.getSystemResource(testEnv + "/" + tenant + "/locator.properties");
+			tenantLocatorProperties.load(url.openStream());
+			ElementLocatorsUtils.initializeElementLocator(tenantLocatorProperties);
+			
+			url = ClassLoader.getSystemResource(testEnv + "/" + tenant + "/data.properties");
+			tenantTestDataProperties.load(url.openStream());
+			TestDataUtils.initializeTestData(tenantTestDataProperties);
 		} catch (FileNotFoundException fie) {
 			fie.printStackTrace();
 		} catch (IOException e) {
@@ -31,32 +43,14 @@ public class TestBase {
 		}
 	}
 
-	public static enum ElementLocators {
-		LOGIN_LOGO_LOCATOR(xpathProperties.getProperty("login-logo")),
-		LOGIN_IMAGE_LOCATOR(xpathProperties.getProperty("login-image")),
-		USERNAME_LOCATOR(xpathProperties.getProperty("username")),
-		PASSWORD_LOCATOR(xpathProperties.getProperty("password")),
-		LOGINBUTTON_LOCATOR(xpathProperties.getProperty("loginButton"));
-
-		private String locatorValue = "";
-
-		private ElementLocators(String locatorValue) {
-			this.locatorValue = locatorValue;
-		}
-
-		public String getLocatorValue() {
-			return locatorValue;
-		}
-	}
-
 	public static WebDriver driver;
 	public static LoginPage loginPage = null;
 
-	public static String username = properties.getProperty(testEnv + ".username");
-	public static String password = properties.getProperty(testEnv + ".password");
+//	public static String username = properties.getProperty(testEnv + ".username");
+//	public static String password = properties.getProperty(testEnv + ".password");
 
 	public static String hostName = properties.getProperty(testEnv + ".hostname");
-	public static String baseUrl = "https://" + hostName + "/signin";
+	public static String baseUrl = "https://" + hostName; // + "/signin?redirectUrl=%2Fhome";
 	public static String chromeDriverPath = properties.getProperty("driver-path");
 
 	private String profileImageXpath = "//img[@alt='profile picture']";

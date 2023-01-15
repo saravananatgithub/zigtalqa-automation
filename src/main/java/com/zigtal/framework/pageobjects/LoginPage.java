@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.zigtal.test.TestBase;
-import com.zigtal.test.TestBase.ElementLocators;
+import com.zigtal.test.utils.ElementLocatorsUtils.ElementLocators;
+import com.zigtal.test.utils.TestDataUtils.TestDataEnum;
+import com.zigtal.test.utils.TestDataUtils;
 
 public class LoginPage {
 
@@ -23,14 +25,22 @@ public class LoginPage {
 		PageFactory.initElements(driver, this);
 	}
 
+	public boolean checkIfLoginLogoPresent() {
+		return driver.findElement(By.xpath(ElementLocators.LOGIN_LOGO_LOCATOR.getLocatorValue())).isDisplayed();
+	}
+
 	public void login() {
 		userNameElement = driver.findElement(By.id(ElementLocators.USERNAME_LOCATOR.getLocatorValue()));
 		passwordElement = driver.findElement(By.id(ElementLocators.PASSWORD_LOCATOR.getLocatorValue()));
 		loginButton = driver.findElement(By.xpath(ElementLocators.LOGINBUTTON_LOCATOR.getLocatorValue()));
-		userNameElement.sendKeys(TestBase.username);
-		passwordElement.sendKeys(TestBase.password);
+		userNameElement.sendKeys(TestDataEnum.USERNAME.getTestData());
+		passwordElement.sendKeys(TestDataEnum.PASSWORD.getTestData());
 		loginButton.click();
 
+	}
+
+	public Object checkIfLoginImagePresent() {
+		return driver.findElement(By.xpath(ElementLocators.LOGIN_IMAGE_LOCATOR.getLocatorValue())).isDisplayed();
 	}
 
 }
